@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Session{% endblock %}
+
+{% block body %}
+    <h1>Create new Session</h1>
+
+    {{ include('symfony_console_make_crud_stagiaire/_form.html.twig') }}
+
+    <a href="{{ path('app_symfony_console_make_crud_stagiaire_index') }}">back to list</a>
+{% endblock %}

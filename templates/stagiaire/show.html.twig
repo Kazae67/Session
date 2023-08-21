@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Stagiaire{% endblock %}
+
+{% block body %}
+    <h1>Stagiaire</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ stagiaire.id }}</td>
+            </tr>
+            <tr>
+                <th>LastName</th>
+                <td>{{ stagiaire.lastName }}</td>
+            </tr>
+            <tr>
+                <th>FirstName</th>
+                <td>{{ stagiaire.firstName }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_stagiaire_index') }}">back to list</a>
+
+    <a href="{{ path('app_stagiaire_edit', {'id': stagiaire.id}) }}">edit</a>
+
+    {{ include('stagiaire/_delete_form.html.twig') }}
+{% endblock %}
