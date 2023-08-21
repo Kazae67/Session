@@ -3,9 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Module;
+use App\Entity\Session;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ModuleType extends AbstractType
 {
@@ -14,8 +16,12 @@ class ModuleType extends AbstractType
         $builder
             ->add('labelModule')
             ->add('duration')
-            ->add('session')
-        ;
+            ->add('Sessions', EntityType::class, [
+                'class' => Session::class,
+                'choice_label' => 'label',
+                'multiple' => true,
+                'expanded' => false,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
