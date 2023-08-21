@@ -41,7 +41,8 @@ CREATE TABLE IF NOT EXISTS `doctrine_migration_versions` (
 
 -- Listage des données de la table session.doctrine_migration_versions : ~1 rows (environ)
 INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
-	('DoctrineMigrations\\Version20230820213343', '2023-08-20 23:34:33', 289);
+	('DoctrineMigrations\\Version20230820213343', '2023-08-20 23:34:33', 289),
+	('DoctrineMigrations\\Version20230821001522', '2023-08-21 02:15:39', 28);
 
 -- Listage de la structure de table session. messenger_messages
 CREATE TABLE IF NOT EXISTS `messenger_messages` (
