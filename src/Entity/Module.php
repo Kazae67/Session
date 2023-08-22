@@ -22,11 +22,11 @@ class Module
     private ?int $duration = null;
 
     #[ORM\ManyToMany(targetEntity: Session::class, inversedBy: 'modules')]
-    private Collection $session;
+    private Collection $sessions;
 
     public function __construct()
     {
-        $this->session = new ArrayCollection();
+        $this->sessions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -63,13 +63,13 @@ class Module
      */
     public function getSessions(): Collection
     {
-        return $this->session;
+        return $this->sessions;
     }
 
     public function addSession(Session $session): static
     {
-        if (!$this->session->contains($session)) {
-            $this->session->add($session);
+        if (!$this->sessions->contains($session)) {
+            $this->sessions->add($session);
         }
 
         return $this;
@@ -77,7 +77,7 @@ class Module
 
     public function removeSession(Session $session): static
     {
-        $this->session->removeElement($session);
+        $this->sessions->removeElement($session);
 
         return $this;
     }
