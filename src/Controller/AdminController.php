@@ -30,6 +30,10 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Hacher le mot de passe avec PASSWORD_DEFAULT
+            $hashedPassword = password_hash($admin->getPassword(), PASSWORD_DEFAULT);
+            $admin->setPassword($hashedPassword);
+
             $entityManager->persist($admin);
             $entityManager->flush();
 

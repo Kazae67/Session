@@ -12,7 +12,7 @@
                 <th>LastName</th>
                 <th>FirstName</th>
                 <th>Email</th>
-                <th>Password</th>
+               
                 <th>actions</th>
             </tr>
         </thead>
@@ -23,7 +23,7 @@
                 <td>{{ admin.lastName }}</td>
                 <td>{{ admin.firstName }}</td>
                 <td>{{ admin.email }}</td>
-                <td>{{ admin.password }}</td>
+                
                 <td>
                     <a href="{{ path('app_admin_show', {'id': admin.id}) }}">show</a>
                     <a href="{{ path('app_admin_edit', {'id': admin.id}) }}">edit</a>
