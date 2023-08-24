@@ -26,10 +26,14 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_880E0D76E7927C74` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table session.admin : ~0 rows (environ)
+-- Listage des données de la table session.admin : ~2 rows (environ)
+INSERT INTO `admin` (`id`, `last_name`, `first_name`, `email`, `password`) VALUES
+	(1, 'Yasin', 'Akgedik', 'Kazae@gmail.com', 'azeaze'),
+	(2, 'Yasinz', 'Akgedikz', 'Kazaze@gmail.com', '$2y$10$Fp.Qu9VIW2vu9rw6EEC88uskr75HBkbkk0Gle0LQ0u2dKUFZXsVoy');
 
 -- Listage de la structure de table session. doctrine_migration_versions
 CREATE TABLE IF NOT EXISTS `doctrine_migration_versions` (
@@ -39,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `doctrine_migration_versions` (
   PRIMARY KEY (`version`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
--- Listage des données de la table session.doctrine_migration_versions : ~1 rows (environ)
+-- Listage des données de la table session.doctrine_migration_versions : ~2 rows (environ)
 INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
 	('DoctrineMigrations\\Version20230820213343', '2023-08-20 23:34:33', 289),
 	('DoctrineMigrations\\Version20230821001522', '2023-08-21 02:15:39', 28);
@@ -67,22 +71,13 @@ CREATE TABLE IF NOT EXISTS `module` (
   `label_module` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `duration` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table session.module : ~0 rows (environ)
-
--- Listage de la structure de table session. module_session
-CREATE TABLE IF NOT EXISTS `module_session` (
-  `module_id` int NOT NULL,
-  `session_id` int NOT NULL,
-  PRIMARY KEY (`module_id`,`session_id`),
-  KEY `IDX_7B3FEBCDAFC2B591` (`module_id`),
-  KEY `IDX_7B3FEBCD613FECDF` (`session_id`),
-  CONSTRAINT `FK_7B3FEBCD613FECDF` FOREIGN KEY (`session_id`) REFERENCES `session` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `FK_7B3FEBCDAFC2B591` FOREIGN KEY (`module_id`) REFERENCES `module` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Listage des données de la table session.module_session : ~0 rows (environ)
+INSERT INTO `module` (`id`, `label_module`, `duration`) VALUES
+	(17, 'lol', 2),
+	(18, 'lol', 2),
+	(19, 'lol', 2);
 
 -- Listage de la structure de table session. session
 CREATE TABLE IF NOT EXISTS `session` (
@@ -92,9 +87,25 @@ CREATE TABLE IF NOT EXISTS `session` (
   `date_end` datetime NOT NULL,
   `nb_limit` int NOT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des données de la table session.session : ~2 rows (environ)
+INSERT INTO `session` (`id`, `label`, `date_start`, `date_end`, `nb_limit`) VALUES
+	(1, 'Initialisation comptabilité', '2018-06-10 00:00:00', '2018-06-21 00:00:00', 2),
+	(2, 'Initialisation à word et excel', '2018-06-17 00:00:00', '2018-01-29 00:00:00', 4);
+
+-- Listage de la structure de table session. session_module
+CREATE TABLE IF NOT EXISTS `session_module` (
+  `session_id` int NOT NULL,
+  `module_id` int NOT NULL,
+  PRIMARY KEY (`session_id`,`module_id`),
+  KEY `IDX_634F2C71613FECDF` (`session_id`),
+  KEY `IDX_634F2C71AFC2B591` (`module_id`),
+  CONSTRAINT `FK_634F2C71613FECDF` FOREIGN KEY (`session_id`) REFERENCES `session` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_634F2C71AFC2B591` FOREIGN KEY (`module_id`) REFERENCES `module` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table session.session : ~0 rows (environ)
+-- Listage des données de la table session.session_module : ~0 rows (environ)
 
 -- Listage de la structure de table session. stagiaire
 CREATE TABLE IF NOT EXISTS `stagiaire` (
@@ -102,9 +113,12 @@ CREATE TABLE IF NOT EXISTS `stagiaire` (
   `last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table session.stagiaire : ~0 rows (environ)
+-- Listage des données de la table session.stagiaire : ~2 rows (environ)
+INSERT INTO `stagiaire` (`id`, `last_name`, `first_name`) VALUES
+	(1, 'Lola', 'Lila'),
+	(2, 'LOOOL', 'rarara');
 
 -- Listage de la structure de table session. stagiaire_session
 CREATE TABLE IF NOT EXISTS `stagiaire_session` (
@@ -117,7 +131,10 @@ CREATE TABLE IF NOT EXISTS `stagiaire_session` (
   CONSTRAINT `FK_D32D02D4BBA93DD6` FOREIGN KEY (`stagiaire_id`) REFERENCES `stagiaire` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table session.stagiaire_session : ~0 rows (environ)
+-- Listage des données de la table session.stagiaire_session : ~2 rows (environ)
+INSERT INTO `stagiaire_session` (`stagiaire_id`, `session_id`) VALUES
+	(1, 1),
+	(2, 2);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
