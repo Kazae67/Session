@@ -5,6 +5,13 @@
 {% block body %}
     <h1>Create new Module</h1>
 
+    {# message d'erreur #}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     {{ include('module/_form.html.twig') }}
 
     <a href="{{ path('app_module_index') }}">back to list</a>

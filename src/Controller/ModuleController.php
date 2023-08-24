@@ -6,6 +6,7 @@ use App\Entity\Module;
 use App\Form\ModuleType;
 use App\Repository\ModuleRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception; 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,10 +31,14 @@ class ModuleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($module);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_module_index', [], Response::HTTP_SEE_OTHER);
+            try { // Ajoute ce bloc try
+                $entityManager->persist($module);
+                $entityManager->flush();
+                return $this->redirectToRoute('app_module_index', [], Response::HTTP_SEE_OTHER);
+            } catch (Exception $e) { // Et ce bloc catch
+                $this->addFlash('error', $e->getMessage());
+                return $this->redirectToRoute('app_module_new');
+            }
         }
 
         return $this->render('module/new.html.twig', [
