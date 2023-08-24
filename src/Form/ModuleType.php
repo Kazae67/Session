@@ -16,11 +16,11 @@ class ModuleType extends AbstractType
         $builder
             ->add('labelModule')
             ->add('duration')
-            ->add('Sessions', EntityType::class, [
+            ->add('sessions', EntityType::class, [ 
                 'class' => Session::class,
                 'choice_label' => 'label',
-                'multiple' => true,
-                'expanded' => false,
+                'multiple' => true,  // Permet de sélectionner plusieurs sessions
+                'expanded' => false, // Utilisez un menu déroulant pour la sélection
             ]);
     }
 

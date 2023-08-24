@@ -1,41 +1,43 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Module index{% endblock %}
+{% block title %}
+    Module index
+{% endblock %}
 
 {% block body %}
     <h1>Module index</h1>
 
     <table class="table">
-<thead>
-    <tr>
-        <th>Id</th>
-        <th>LabelModule</th>
-        <th>Duration</th>
-        <th>Session</th>
-        <th>actions</th>
-    </tr>
-</thead>
-<tbody>
-{% for module in modules %}
-    <tr>
-        <td>{{ module.id }}</td>
-        <td>{{ module.labelModule }}</td>
-        <td>{{ module.duration }}</td>
-        <td>
-            {% for session in module.getSessions %}
-                {{ session.label }}
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Module</th>
+                <th>Session</th>
+                <th>Duration</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for module in modules %}
+                <tr>
+                    <td>{{ module.id }}</td>
+                    <td>{{ module.labelModule }}</td>
+                    <td>
+                        {% for session in module.sessions %}
+                            {{ session.label }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{{ module.duration }}</td>
+                    <td>
+                        <a href="{{ path('app_module_show', {'id': module.id}) }}">show</a>
+                        <a href="{{ path('app_module_edit', {'id': module.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">no records found</td>
+                </tr>
             {% endfor %}
-        </td>
-        <td>
-            <a href="{{ path('app_module_show', {'id': module.id}) }}">show</a>
-            <a href="{{ path('app_module_edit', {'id': module.id}) }}">edit</a>
-        </td>
-    </tr>
-{% else %}
-    <tr>
-        <td colspan="5">no records found</td>
-    </tr>
-{% endfor %}
         </tbody>
     </table>
 
