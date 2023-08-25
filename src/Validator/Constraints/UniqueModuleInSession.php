@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class UniqueModuleInSession extends Constraint
 {
+    // Stocker le message d'erreur par défaut
     public $message = 'Le nom du module "{{ labelModule }}" est déjà utilisé dans cette session.';
 }
-
 ?>
