@@ -7,7 +7,7 @@ use Exception;
 
 class ModuleListener
 {
-    // Méthode exécutée avant la persistance d'une entité
+    // Méthode exécutée avant la persistance d'une entité.
     public function prePersist(PrePersistEventArgs $args)
     {
         // Récupération de l'entité Module en cours de persistance
