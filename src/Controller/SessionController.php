@@ -8,9 +8,12 @@ use App\Form\Session2Type;
 use App\Repository\SessionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 #[Route('/session')]
 class SessionController extends AbstractController
@@ -39,7 +42,7 @@ class SessionController extends AbstractController
 
         return $this->render('session/new.html.twig', [
             'session' => $session,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -65,7 +68,7 @@ class SessionController extends AbstractController
 
         return $this->render('session/edit.html.twig', [
             'session' => $session,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -114,5 +117,38 @@ class SessionController extends AbstractController
         }
 
         return $this->redirectToRoute('app_session_inscrits', ['id' => $sessionId]);
+    }
+
+    #[Route('/{id}/inscrire', name: 'app_session_inscrire', methods: ['GET', 'POST'])]
+    public function inscrireStagiaire(Request $request, Session $session, EntityManagerInterface $entityManager, SessionRepository $sessionRepository): Response
+    {
+        $nonInscrits = $sessionRepository->findNonInscrits($session->getId());
+        $form = $this->createFormBuilder()
+            ->add('stagiaire', EntityType::class, [
+                'class' => Stagiaire::class,
+                'choices' => $nonInscrits,
+                'choice_label' => function(Stagiaire $stagiaire) {
+                    return $stagiaire->getFirstName() . ' ' . $stagiaire->getLastName();
+                }
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Inscrire'
+            ])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $stagiaire = $form->get('stagiaire')->getData();
+            $session->addStagiaire($stagiaire);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_session_inscrits', ['id' => $session->getId()]);
+        }
+
+        return $this->render('session/inscrire.html.twig', [
+            'session' => $session,
+            'form' => $form->createView(),
+        ]);
     }
 }
