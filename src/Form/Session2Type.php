@@ -17,7 +17,7 @@ class Session2Type extends AbstractType
             ->add('dateEnd')
             ->add('nbLimit')
             ->add('stagiaires')
-            ->add('modules')
+
         ;
     }
 
