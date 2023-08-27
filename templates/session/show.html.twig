@@ -24,8 +24,12 @@
                 <td>{{ session.dateEnd ? session.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>NbLimit</th>
-                <td>{{ session.nbLimit }}</td>
+                <th>Number Reserved</th>
+                <td>{{ session.stagiaires|length }}</td>
+            </tr>
+            <tr>
+                <th>Number Remaining</th>
+                <td>{{ session.nbLimit - (session.stagiaires|length) }}</td>
             </tr>
         </tbody>
     </table>

@@ -12,7 +12,8 @@
                 <th>Label</th>
                 <th>DateStart</th>
                 <th>DateEnd</th>
-                <th>NbLimit</th>
+                <th>Number Reserved</th>
+                <th>Number Remaining</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -23,7 +24,8 @@
                 <td>{{ session.label }}</td>
                 <td>{{ session.dateStart ? session.dateStart|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ session.dateEnd ? session.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ session.nbLimit }}</td>
+                <td>{{ session.stagiaires|length }}</td>
+                <td>{{ session.nbLimit - (session.stagiaires|length) }}</td>
                 <td>
                     <a href="{{ path('app_session_show', {'id': session.id}) }}">show</a>
                     <a href="{{ path('app_session_edit', {'id': session.id}) }}">edit</a>
@@ -31,7 +33,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="7">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
