@@ -78,4 +78,15 @@ class SessionController extends AbstractController
 
         return $this->redirectToRoute('app_session_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/{id}/non-inscrits', name: 'app_session_non_inscrits', methods: ['GET'])]
+    public function showNonInscrits(Session $session, SessionRepository $sessionRepository): Response
+    {
+        $nonInscrits = $sessionRepository->findNonInscrits($session->getId());
+
+        return $this->render('session/non_inscrits.html.twig', [
+            'session' => $session,
+            'nonInscrits' => $nonInscrits,
+        ]);
+    }
 }
