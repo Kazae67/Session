@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Session;
+use App\Entity\Stagiaire;
 use App\Form\Session2Type;
 use App\Repository\SessionRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -99,5 +100,19 @@ class SessionController extends AbstractController
             'session' => $session,
             'inscrits' => $inscrits,
         ]);
+    }
+
+    #[Route('/{sessionId}/deprogrammer/{stagiaireId}', name: 'app_session_deprogrammer', methods: ['POST'])]
+    public function deprogrammerStagiaire(int $sessionId, int $stagiaireId, EntityManagerInterface $entityManager): Response
+    {
+        $session = $entityManager->getRepository(Session::class)->find($sessionId);
+        $stagiaire = $entityManager->getRepository(Stagiaire::class)->find($stagiaireId);
+
+        if ($session && $stagiaire) {
+            $session->removeStagiaire($stagiaire);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_session_inscrits', ['id' => $sessionId]);
     }
 }

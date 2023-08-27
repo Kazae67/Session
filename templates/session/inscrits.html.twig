@@ -11,7 +11,7 @@
                 <th>ID</th>
                 <th>Nom</th>
                 <th>Prénom</th>
-
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -20,7 +20,11 @@
                     <td>{{ stagiaire.id }}</td>
                     <td>{{ stagiaire.lastName }}</td>
                     <td>{{ stagiaire.firstName }}</td>
-
+                    <td>
+                        <form action="{{ path('app_session_deprogrammer', {'sessionId': session.id, 'stagiaireId': stagiaire.id}) }}" method="post">
+                            <button type="submit">Déprogrammer</button>
+                        </form>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
