@@ -11,7 +11,7 @@ class ModuleListener
     public function prePersist(PrePersistEventArgs $args)
     {
         // Récupération de l'entité Module en cours de persistance
-        $module = $args->getEntity();
+        $module = $args->getObject();  // Utilisez getObject() au lieu de getEntity()
 
         // Vérification si l'entité est bien une instance de la classe Module
         if (!$module instanceof Module) {
@@ -19,7 +19,7 @@ class ModuleListener
         }
 
         // Récupération de l'EntityManager pour accéder à la base de données
-        $entityManager = $args->getEntityManager();
+        $entityManager = $args->getObjectManager();  // Utilisez getObjectManager() au lieu de getEntityManager()
 
         // Récupération des sessions liées à ce module
         $sessions = $module->getSessions();
@@ -37,4 +37,3 @@ class ModuleListener
         }
     }
 }
-?>
