@@ -89,4 +89,15 @@ class SessionController extends AbstractController
             'nonInscrits' => $nonInscrits,
         ]);
     }
+
+    #[Route('/{id}/inscrits', name: 'app_session_inscrits', methods: ['GET'])]
+    public function showInscrits(Session $session): Response
+    {
+        $inscrits = $session->getStagiaires();
+
+        return $this->render('session/inscrits.html.twig', [
+            'session' => $session,
+            'inscrits' => $inscrits,
+        ]);
+    }
 }

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Stagiaires inscrits{% endblock %}
+
+{% block body %}
+    <h1>Stagiaires inscrits pour la session {{ session.id }}</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for stagiaire in inscrits %}
+                <tr>
+                    <td>{{ stagiaire.id }}</td>
+                    <td>{{ stagiaire.lastName }}</td>
+                    <td>{{ stagiaire.firstName }}</td>
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_session_index') }}">Retour à la liste des sessions</a>
+{% endblock %}
