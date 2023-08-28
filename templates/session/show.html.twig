@@ -35,6 +35,15 @@
             </tbody>
         </table>
 
+        <h2>Stagiaires Inscrits</h2>
+        <ul>
+            {% for stagiaire in session.stagiaires %}
+                <li>{{ stagiaire.firstName }} {{ stagiaire.lastName }}</li>
+            {% else %}
+                <li>Aucun stagiaire inscrit.</li>
+            {% endfor %}
+        </ul>
+
         <a href="{{ path('app_session_index') }}" class="show-back-button">back to list</a>
         <a href="{{ path('app_session_edit', {'id': session.id}) }}" class="show-edit-button">edit</a>
 
