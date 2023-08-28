@@ -31,11 +31,11 @@ class ModuleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            try { // Ajoute ce bloc try
+            try {
                 $entityManager->persist($module);
                 $entityManager->flush();
                 return $this->redirectToRoute('app_module_index', [], Response::HTTP_SEE_OTHER);
-            } catch (Exception $e) { // Et ce bloc catch
+            } catch (Exception $e) { 
                 $this->addFlash('error', $e->getMessage());
                 return $this->redirectToRoute('app_module_new');
             }
