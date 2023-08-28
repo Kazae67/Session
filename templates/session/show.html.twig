@@ -3,49 +3,41 @@
 {% block title %}Session{% endblock %}
 
 {% block body %}
-    <h1>Session</h1>
+    <div class="show-container">
+        <h1>Session</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ session.id }}</td>
-            </tr>
-            <tr>
-                <th>Label</th>
-                <td>{{ session.label }}</td>
-            </tr>
-            <tr>
-                <th>DateStart</th>
-                <td>{{ session.dateStart ? session.dateStart|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>DateEnd</th>
-                <td>{{ session.dateEnd ? session.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Number Reserved</th>
-                <td>{{ session.stagiaires|length }}</td>
-            </tr>
-            <tr>
-                <th>Number Remaining</th>
-                <td>{{ session.nbLimit - (session.stagiaires|length) }}</td>
-            </tr>
-        </tbody>
-    </table>
+        <table class="show-table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ session.id }}</td>
+                </tr>
+                <tr>
+                    <th>Label</th>
+                    <td>{{ session.label }}</td>
+                </tr>
+                <tr>
+                    <th>DateStart</th>
+                    <td>{{ session.dateStart ? session.dateStart|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>DateEnd</th>
+                    <td>{{ session.dateEnd ? session.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Number Reserved</th>
+                    <td>{{ session.stagiaires|length }}</td>
+                </tr>
+                <tr>
+                    <th>Number Remaining</th>
+                    <td>{{ session.nbLimit - (session.stagiaires|length) }}</td>
+                </tr>
+            </tbody>
+        </table>
 
-    <h2>Stagiaires Inscrits</h2>
-    <ul>
-        {% for stagiaire in session.stagiaires %}
-            <li>{{ stagiaire.firstName }} {{ stagiaire.lastName }}</li>
-        {% else %}
-            <li>Aucun stagiaire inscrit.</li>
-        {% endfor %}
-    </ul>
+        <a href="{{ path('app_session_index') }}" class="show-back-button">back to list</a>
+        <a href="{{ path('app_session_edit', {'id': session.id}) }}" class="show-edit-button">edit</a>
 
-    <a href="{{ path('app_session_index') }}">back to list</a>
-
-    <a href="{{ path('app_session_edit', {'id': session.id}) }}">edit</a>
-
-    {{ include('session/_delete_form.html.twig') }}
+        {{ include('session/_delete_form.html.twig') }}
+    </div>
 {% endblock %}
