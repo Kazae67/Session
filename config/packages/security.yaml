@@ -20,6 +20,8 @@ security:
                 # where to redirect after logout
                 target: app_login
     access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/profile, roles: ROLE_USER}
 
 when@test:
     security:
