@@ -22,38 +22,32 @@ USE `session`;
 -- Listage de la structure de table session. admin
 CREATE TABLE IF NOT EXISTS `admin` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `first_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_880E0D76E7927C74` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table session.admin : ~2 rows (environ)
-INSERT INTO `admin` (`id`, `last_name`, `first_name`, `email`, `password`) VALUES
-	(1, 'Yasin', 'Akgedik', 'Kazae@gmail.com', 'azeaze'),
-	(2, 'Yasinz', 'Akgedikz', 'Kazaze@gmail.com', '$2y$10$Fp.Qu9VIW2vu9rw6EEC88uskr75HBkbkk0Gle0LQ0u2dKUFZXsVoy');
+-- Les données exportées n'étaient pas sélectionnées.
 
 -- Listage de la structure de table session. doctrine_migration_versions
 CREATE TABLE IF NOT EXISTS `doctrine_migration_versions` (
-  `version` varchar(191) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `version` varchar(191) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   `executed_at` datetime DEFAULT NULL,
   `execution_time` int DEFAULT NULL,
   PRIMARY KEY (`version`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
--- Listage des données de la table session.doctrine_migration_versions : ~2 rows (environ)
-INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
-	('DoctrineMigrations\\Version20230820213343', '2023-08-20 23:34:33', 289),
-	('DoctrineMigrations\\Version20230821001522', '2023-08-21 02:15:39', 28);
+-- Les données exportées n'étaient pas sélectionnées.
 
 -- Listage de la structure de table session. messenger_messages
 CREATE TABLE IF NOT EXISTS `messenger_messages` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `headers` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue_name` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `headers` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue_name` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)',
   `available_at` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)',
   `delivered_at` datetime DEFAULT NULL COMMENT '(DC2Type:datetime_immutable)',
@@ -61,23 +55,19 @@ CREATE TABLE IF NOT EXISTS `messenger_messages` (
   KEY `IDX_75EA56E0FB7336F0` (`queue_name`),
   KEY `IDX_75EA56E0E3BD61CE` (`available_at`),
   KEY `IDX_75EA56E016BA31DB` (`delivered_at`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table session.messenger_messages : ~0 rows (environ)
+-- Les données exportées n'étaient pas sélectionnées.
 
 -- Listage de la structure de table session. module
 CREATE TABLE IF NOT EXISTS `module` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `label_module` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `label_module` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `duration` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table session.module : ~0 rows (environ)
-INSERT INTO `module` (`id`, `label_module`, `duration`) VALUES
-	(29, 'Word', 5),
-	(30, 'Word', 8),
-	(31, 'lol', 2);
+-- Les données exportées n'étaient pas sélectionnées.
 
 -- Listage de la structure de table session. module_session
 CREATE TABLE IF NOT EXISTS `module_session` (
@@ -90,41 +80,29 @@ CREATE TABLE IF NOT EXISTS `module_session` (
   CONSTRAINT `FK_7B3FEBCDAFC2B591` FOREIGN KEY (`module_id`) REFERENCES `module` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table session.module_session : ~0 rows (environ)
-INSERT INTO `module_session` (`module_id`, `session_id`) VALUES
-	(29, 4),
-	(30, 5),
-	(31, 6);
+-- Les données exportées n'étaient pas sélectionnées.
 
 -- Listage de la structure de table session. session
 CREATE TABLE IF NOT EXISTS `session` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `label` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `label` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `date_start` datetime NOT NULL,
   `date_end` datetime NOT NULL,
   `nb_limit` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table session.session : ~3 rows (environ)
-INSERT INTO `session` (`id`, `label`, `date_start`, `date_end`, `nb_limit`) VALUES
-	(4, 'Les inscrits', '2018-01-01 00:00:00', '2018-01-01 00:00:00', 8),
-	(5, 'Les non inscrits', '2018-01-01 00:00:00', '2018-01-01 00:00:00', 6),
-	(6, 'Test', '2018-01-01 00:00:00', '2018-01-01 00:00:00', 2),
-	(7, 'ROUGE', '2018-01-01 00:00:00', '2018-01-01 00:00:00', 10);
+-- Les données exportées n'étaient pas sélectionnées.
 
 -- Listage de la structure de table session. stagiaire
 CREATE TABLE IF NOT EXISTS `stagiaire` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `first_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table session.stagiaire : ~2 rows (environ)
-INSERT INTO `stagiaire` (`id`, `last_name`, `first_name`) VALUES
-	(4, 'Yasin', 'Akgedik'),
-	(5, 'Elina', 'Arnauld');
+-- Les données exportées n'étaient pas sélectionnées.
 
 -- Listage de la structure de table session. stagiaire_session
 CREATE TABLE IF NOT EXISTS `stagiaire_session` (
@@ -137,12 +115,21 @@ CREATE TABLE IF NOT EXISTS `stagiaire_session` (
   CONSTRAINT `FK_D32D02D4BBA93DD6` FOREIGN KEY (`stagiaire_id`) REFERENCES `stagiaire` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table session.stagiaire_session : ~0 rows (environ)
-INSERT INTO `stagiaire_session` (`stagiaire_id`, `session_id`) VALUES
-	(4, 4),
-	(4, 5),
-	(5, 4),
-	(5, 5);
+-- Les données exportées n'étaient pas sélectionnées.
+
+-- Listage de la structure de table session. user
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pseudo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `roles` json NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_verified` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_8D93D649E7927C74` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Les données exportées n'étaient pas sélectionnées.
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
