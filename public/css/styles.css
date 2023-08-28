@@ -1,4 +1,4 @@
-/* public/css/styles.css */
+/* NAVBAR */ 
 .navbar {
     background-color: #333;
     color: white;
@@ -8,4 +8,52 @@
     margin-right: 15px;
     color: white;
     text-decoration: none;
+}
+
+/* TABLES */
+.container {
+    margin: 20px;
+}
+
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    text-align: left;
+    width: 100%;
+}
+
+.styled-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.create-button {
+    padding: 10px 20px;
+    background-color: #009879;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.create-button:hover {
+    background-color: #007f65;
 }

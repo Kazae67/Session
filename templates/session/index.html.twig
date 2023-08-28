@@ -3,41 +3,43 @@
 {% block title %}Session index{% endblock %}
 
 {% block body %}
-    <h1>Session index</h1>
+    <div class="container">
+        <h1>Session index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Label</th>
-                <th>DateStart</th>
-                <th>DateEnd</th>
-                <th>Number Reserved</th>
-                <th>Number Remaining</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for session in sessions %}
-            <tr>
-                <td>{{ session.id }}</td>
-                <td>{{ session.label }}</td>
-                <td>{{ session.dateStart ? session.dateStart|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ session.dateEnd ? session.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ session.stagiaires|length }}</td>
-                <td>{{ session.nbLimit - (session.stagiaires|length) }}</td>
-                <td>
-                    <a href="{{ path('app_session_show', {'id': session.id}) }}">show</a>
-                    <a href="{{ path('app_session_edit', {'id': session.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Label</th>
+                    <th>DateStart</th>
+                    <th>DateEnd</th>
+                    <th>Number Reserved</th>
+                    <th>Number Remaining</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for session in sessions %}
+                <tr>
+                    <td>{{ session.id }}</td>
+                    <td>{{ session.label }}</td>
+                    <td>{{ session.dateStart ? session.dateStart|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ session.dateEnd ? session.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ session.stagiaires|length }}</td>
+                    <td>{{ session.nbLimit - (session.stagiaires|length) }}</td>
+                    <td>
+                        <a href="{{ path('app_session_show', {'id': session.id}) }}">Show</a>
+                        <a href="{{ path('app_session_edit', {'id': session.id}) }}">Edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">No records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <a href="{{ path('app_session_new') }}">Create new</a>
+        <a href="{{ path('app_session_new') }}" class="create-button">Create new</a>
+    </div>
 {% endblock %}
