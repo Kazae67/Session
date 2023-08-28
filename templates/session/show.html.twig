@@ -44,6 +44,15 @@
             {% endfor %}
         </ul>
 
+        <h2>Modules dans session</h2>
+         {% for labelModule in session.modules %}
+            <ul>
+                <li>{{ labelModule }}</li>
+            </ul>
+         {% else %}
+            <li>Aucun module dans la session.</li>
+         {% endfor %}
+
         <a href="{{ path('app_session_index') }}" class="show-back-button">back to list</a>
         <a href="{{ path('app_session_edit', {'id': session.id}) }}" class="show-edit-button">edit</a>
 
