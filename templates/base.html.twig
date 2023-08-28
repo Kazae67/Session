@@ -17,7 +17,10 @@
             <a href="{{ path('app_session_index') }}">Sessions</a>
             <a href="{{ path('app_module_index') }}">Modules</a>
             <a href="{{ path('app_stagiaire_index') }}">Stagiaires</a>
+
+            {# mettre ici une condition, si connexion succès alors, afficher Admin, sinon, afficher Connexion #}
             <a href="{{ path('app_admin_index') }}">Admin</a>
+            <a href="{{ path('app_admin_index') }}">Connexion</a> 
         </div>
         {% block body %}{% endblock %}
     </body>
