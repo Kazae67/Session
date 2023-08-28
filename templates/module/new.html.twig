@@ -3,16 +3,20 @@
 {% block title %}New Module{% endblock %}
 
 {% block body %}
-    <h1>Create new Module</h1>
+    <div class="container">
+        <h1>Create new Module</h1>
 
-    {# message d'erreur #}
-    {% for message in app.flashes('error') %}
-        <div class="alert alert-danger">
-            {{ message }}
+        {# message d'erreur #}
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <div class="form-container">
+            {{ include('module/_form.html.twig') }}
         </div>
-    {% endfor %}
 
-    {{ include('module/_form.html.twig') }}
-
-    <a href="{{ path('app_module_index') }}">back to list</a>
+        <a href="{{ path('app_module_index') }}" class="back-button">Back to list</a>
+    </div>
 {% endblock %}
