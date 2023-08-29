@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Session;
 use App\Entity\Stagiaire;
+use App\Entity\Module;
 use App\Form\Session2Type;
+use App\Repository\ModuleRepository;
 use App\Repository\SessionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,6 +29,7 @@ class SessionController extends AbstractController
         ]);
     }
 
+    // SESSION NEW
     #[Route('/new', name: 'app_session_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -47,22 +50,32 @@ class SessionController extends AbstractController
         ]);
     }
 
+    // SESSION SHOW
     #[Route('/{id}', name: 'app_session_show', methods: ['GET'])]
-    public function show(Session $session, StagiaireRepository $stagiaireRepository): Response
+    public function show(Session $session, StagiaireRepository $stagiaireRepository, ModuleRepository $moduleRepository): Response
     {
         $allStagiaires = $stagiaireRepository->findAll();
         $stagiairesInSession = $session->getStagiaires();
-
+    
         $stagiairesNotInSession = array_filter($allStagiaires, function ($stagiaire) use ($stagiairesInSession) {
             return !in_array($stagiaire, $stagiairesInSession->toArray());
         });
-
+    
+        $allModules = $moduleRepository->findAll();
+        $modulesInSession = $session->getModules();
+    
+        $modulesNotInSession = array_filter($allModules, function ($module) use ($modulesInSession) {
+            return !in_array($module, $modulesInSession->toArray());
+        });
+    
         return $this->render('session/show.html.twig', [
             'session' => $session,
             'stagiairesNotInSession' => $stagiairesNotInSession,
+            'modulesNotInSession' => $modulesNotInSession,
         ]);
     }
 
+    // SESSION EDIT
     #[Route('/{id}/edit', name: 'app_session_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Session $session, EntityManagerInterface $entityManager): Response
     {
@@ -81,6 +94,7 @@ class SessionController extends AbstractController
         ]);
     }
 
+    // SESSION DELETE
     #[Route('/{id}', name: 'app_session_delete', methods: ['POST'])]
     public function delete(Request $request, Session $session, EntityManagerInterface $entityManager): Response
     {
@@ -92,6 +106,7 @@ class SessionController extends AbstractController
         return $this->redirectToRoute('app_session_index', [], Response::HTTP_SEE_OTHER);
     }
 
+    // VOIR STAGIAIRE NON-INSCRITS DEPUIS /NON-INSCRITS
     #[Route('/{id}/non-inscrits', name: 'app_session_non_inscrits', methods: ['GET'])]
     public function showNonInscrits(Session $session, SessionRepository $sessionRepository): Response
     {
@@ -103,6 +118,7 @@ class SessionController extends AbstractController
         ]);
     }
 
+    // VOIR STAGIAIRE INSCRITS DEPUIS /INSCRITS
     #[Route('/{id}/inscrits', name: 'app_session_inscrits', methods: ['GET'])]
     public function showInscrits(Session $session): Response
     {
@@ -114,6 +130,7 @@ class SessionController extends AbstractController
         ]);
     }
 
+    // DÉPROGRAMMER
     #[Route('/{sessionId}/deprogrammer/{stagiaireId}', name: 'app_session_deprogrammer', methods: ['POST'])]
     public function deprogrammerStagiaire(int $sessionId, int $stagiaireId, EntityManagerInterface $entityManager): Response
     {
@@ -128,6 +145,7 @@ class SessionController extends AbstractController
         return $this->redirectToRoute('app_session_inscrits', ['id' => $sessionId]);
     }
 
+    // INSCRIRE DEPUIS ROUTE /INSCRIRE
     #[Route('/{id}/inscrire', name: 'app_session_inscrire', methods: ['GET', 'POST'])]
     public function inscrireStagiaire(Request $request, Session $session, EntityManagerInterface $entityManager, SessionRepository $sessionRepository): Response
     {
@@ -161,7 +179,7 @@ class SessionController extends AbstractController
         ]);
     }
 
-    // Ajouter un stagiaire d'une session
+    // AJOUTER STAGIAIRE SESSION
     #[Route('/{sessionId}/ajouter/{stagiaireId}', name: 'app_session_ajouter', methods: ['POST'])]
     public function ajouterStagiaire(int $sessionId, int $stagiaireId, EntityManagerInterface $entityManager): Response
     {
@@ -176,7 +194,7 @@ class SessionController extends AbstractController
         return $this->redirectToRoute('app_session_show', ['id' => $sessionId]);
     }
     
-    // Retirer un stagiaire d'une session
+    // RETIRER STAGIAIRE SESSION
     #[Route('/{sessionId}/retirer/{stagiaireId}', name: 'app_session_retirer', methods: ['POST'])]
         public function retirerStagiaire(int $sessionId, int $stagiaireId, EntityManagerInterface $entityManager): Response
         {
@@ -191,4 +209,33 @@ class SessionController extends AbstractController
         return $this->redirectToRoute('app_session_show', ['id' => $sessionId]);
     }
 
+    // AJOUTER MODULE SESSION
+    #[Route('/{sessionId}/ajouter-module/{moduleId}', name: 'app_session_ajouter_module', methods: ['POST'])]
+    public function ajouterModule(int $sessionId, int $moduleId, EntityManagerInterface $entityManager): Response
+    {
+        $session = $entityManager->getRepository(Session::class)->find($sessionId);
+        $module = $entityManager->getRepository(Module::class)->find($moduleId);
+
+        if ($session && $module) {
+            $session->addModule($module);
+            $entityManager->flush();
+        }        
+    
+        return $this->redirectToRoute('app_session_show', ['id' => $sessionId]);
+    }
+    
+    // RETIRER MODULE SESSION
+    #[Route('/{sessionId}/retirer-module/{moduleId}', name: 'app_session_retirer_module', methods: ['POST'])]
+    public function retirerModule(int $sessionId, int $moduleId, EntityManagerInterface $entityManager): Response
+    {
+        $session = $entityManager->getRepository(Session::class)->find($sessionId);
+        $module = $entityManager->getRepository(Module::class)->find($moduleId);
+    
+        if ($session && $module) {
+            $session->removeModule($module);
+            $entityManager->flush();
+        }
+    
+        return $this->redirectToRoute('app_session_show', ['id' => $sessionId]);
+    }
 }

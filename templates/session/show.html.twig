@@ -35,6 +35,7 @@
             </tbody>
         </table>
 
+
         <!-- STAGIAIRES INSCRITS -->
         <h2>Stagiaires Inscrits</h2>
         <ul>
@@ -65,21 +66,37 @@
             {% endfor %}
         </ul>
 
-        <!-- MODULES DANS LA SESSION -->
+        <!-- MODULES DANS SESSION -->
         <h2>Modules dans session</h2>
-         {% for labelModule in session.modules %}
-            <ul>
-                <li>{{ labelModule }}</li>
-            </ul>
-         {% else %}
-            <li>Aucun module dans la session.</li>
-         {% endfor %}
+        <ul>
+            {% for module in session.modules %}
+                <li>
+                    {{ module.labelModule }}
+                    <form method="post" action="{{ path('app_session_retirer_module', {'sessionId': session.id, 'moduleId': module.id}) }}">
+                        <button type="submit">Retirer</button>
+                    </form>
+                </li>
+            {% else %}
+                <li>Aucun module dans la session.</li>
+            {% endfor %}
+        </ul>
 
-        <!-- MODULES N'ÉTANT PAS DANS LA SESSION -->
-        <h2>Modules n'étant pas dans la session</h2>
-        {% for %}
-        {% else %}
-        {% endfor %}
+        <!-- MODULES NON INSCRITS -->
+        <h2>Modules non inscrits</h2>
+        <ul>
+            {% for module in modulesNotInSession %}
+                <li>
+                    {{ module.labelModule }}
+                    <form method="post" action="{{ path('app_session_ajouter_module', {'sessionId': session.id, 'moduleId': module.id}) }}">
+                        <button type="submit">Ajouter</button>
+                    </form>
+                </li>
+            {% else %}
+                <li>Aucun module non inscrit.</li>
+            {% endfor %}
+        </ul>
+
+
 
 
         <a href="{{ path('app_session_index') }}" class="show-back-button">back to list</a>
