@@ -48,10 +48,18 @@ class SessionController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_session_show', methods: ['GET'])]
-    public function show(Session $session): Response
+    public function show(Session $session, StagiaireRepository $stagiaireRepository): Response
     {
+        $allStagiaires = $stagiaireRepository->findAll();
+        $stagiairesInSession = $session->getStagiaires();
+
+        $stagiairesNotInSession = array_filter($allStagiaires, function ($stagiaire) use ($stagiairesInSession) {
+            return !in_array($stagiaire, $stagiairesInSession->toArray());
+        });
+
         return $this->render('session/show.html.twig', [
             'session' => $session,
+            'stagiairesNotInSession' => $stagiairesNotInSession,
         ]);
     }
 
@@ -152,39 +160,4 @@ class SessionController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-    /*
-        #[Route('/{id}', name: 'app_session_show', methods: ['GET'])]
-    public function show(Session $session, StagiaireRepository $stagiaireRepository): Response
-    {
-    // Récupérer tous les stagiaires non inscrits à cette session
-    $allStagiaires = $stagiaireRepository->findAll();
-    $inscrits = $session->getStagiaires()->toArray();
-    $nonInscrits = array_diff($allStagiaires, $inscrits);
-
-    return $this->render('session/show.html.twig', [
-        'session' => $session,
-        'nonInscrits' => $nonInscrits,
-    ]);
-}
-    */
-
-
-    /*
-        #[Route('/{id}', name: 'app_session_show', methods: ['GET'])]
-    public function show(Session $session, StagiaireRepository $stagiaireRepository): Response
-    {
-        $allStagiaires = $stagiaireRepository->findAll();
-        $stagiairesInSession = $session->getStagiaires();
-
-        $stagiairesNotInSession = array_filter($allStagiaires, function ($stagiaire) use ($stagiairesInSession) {
-            return !in_array($stagiaire, $stagiairesInSession->toArray());
-        });
-
-        return $this->render('session/show.html.twig', [
-            'session' => $session,
-            'stagiairesNotInSession' => $stagiairesNotInSession,
-        ]);
-    }
-    */
 }
