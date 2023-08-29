@@ -71,7 +71,7 @@
         <ul>
             {% for module in session.modules %}
                 <li>
-                    {{ module.labelModule }}
+                    {{ module.labelModule }} {{ module.duration }} jours
                     <form method="post" action="{{ path('app_session_retirer_module', {'sessionId': session.id, 'moduleId': module.id}) }}">
                         <button type="submit">Retirer</button>
                     </form>
@@ -86,7 +86,7 @@
         <ul>
             {% for module in modulesNotInSession %}
                 <li>
-                    {{ module.labelModule }}
+                    {{ module.labelModule }} {{ module.duration }} jours
                     <form method="post" action="{{ path('app_session_ajouter_module', {'sessionId': session.id, 'moduleId': module.id}) }}">
                         <button type="submit">Ajouter</button>
                     </form>
@@ -95,9 +95,6 @@
                 <li>Aucun module non inscrit.</li>
             {% endfor %}
         </ul>
-
-
-
 
         <a href="{{ path('app_session_index') }}" class="show-back-button">back to list</a>
         <a href="{{ path('app_session_edit', {'id': session.id}) }}" class="show-edit-button">edit</a>
