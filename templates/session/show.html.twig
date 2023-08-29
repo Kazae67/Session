@@ -44,6 +44,16 @@
             {% endfor %}
         </ul>
 
+
+        <h2>Stagiaires non inscrits</h2>
+        <ul>
+            {% for stagiaire in stagiairesNotInSession %}
+                <li>{{ stagiaire.firstName }} {{ stagiaire.lastName }}</li>
+            {% else %}
+                <li>Tous les stagiaires sont inscrits.</li>
+            {% endfor %}
+        </ul>
+        
         <h2>Modules dans session</h2>
          {% for labelModule in session.modules %}
             <ul>
