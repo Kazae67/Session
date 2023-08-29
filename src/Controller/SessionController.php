@@ -160,4 +160,35 @@ class SessionController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    // Ajouter un stagiaire d'une session
+    #[Route('/{sessionId}/ajouter/{stagiaireId}', name: 'app_session_ajouter', methods: ['POST'])]
+    public function ajouterStagiaire(int $sessionId, int $stagiaireId, EntityManagerInterface $entityManager): Response
+    {
+        $session = $entityManager->getRepository(Session::class)->find($sessionId);
+        $stagiaire = $entityManager->getRepository(Stagiaire::class)->find($stagiaireId);
+
+        if ($session && $stagiaire) {
+            $session->addStagiaire($stagiaire);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_session_show', ['id' => $sessionId]);
+    }
+    
+    // Retirer un stagiaire d'une session
+    #[Route('/{sessionId}/retirer/{stagiaireId}', name: 'app_session_retirer', methods: ['POST'])]
+        public function retirerStagiaire(int $sessionId, int $stagiaireId, EntityManagerInterface $entityManager): Response
+        {
+        $session = $entityManager->getRepository(Session::class)->find($sessionId);
+        $stagiaire = $entityManager->getRepository(Stagiaire::class)->find($stagiaireId);
+
+        if ($session && $stagiaire) {
+            $session->removeStagiaire($stagiaire);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_session_show', ['id' => $sessionId]);
+    }
+
 }

@@ -35,24 +35,37 @@
             </tbody>
         </table>
 
+        <!-- STAGIAIRES INSCRITS -->
         <h2>Stagiaires Inscrits</h2>
         <ul>
             {% for stagiaire in session.stagiaires %}
-                <li> {{ stagiaire.firstName }} {{ stagiaire.lastName }}</li>
+                <li>
+                    {{ stagiaire.firstName }} {{ stagiaire.lastName }}
+                    <form method="post" action="{{ path('app_session_retirer', {'sessionId': session.id, 'stagiaireId': stagiaire.id}) }}">
+                        <button type="submit">Retirer</button>
+                    </form>
+                </li>
             {% else %}
                 <li>Aucun stagiaire inscrit.</li>
             {% endfor %}
         </ul>
 
+        <!-- STAGIAIRES NON INSCRITS -->
         <h2>Stagiaires non inscrits</h2>
-        <ul> 
-            {% for stagiaire in stagiairesNotInSession %} 
-                <li> {{ stagiaire.lastName }} {{ stagiaire.firstName }}</li>
+        <ul>
+            {% for stagiaire in stagiairesNotInSession %}
+                <li>
+                    {{ stagiaire.lastName }} {{ stagiaire.firstName }}
+                    <form method="post" action="{{ path('app_session_ajouter', {'sessionId': session.id, 'stagiaireId': stagiaire.id}) }}">
+                        <button type="submit">Ajouter</button>
+                    </form>
+                </li>
             {% else %}
                 <li>Aucun stagiaire non inscrit.</li>
             {% endfor %}
         </ul>
 
+        <!-- MODULES DANS LA SESSION -->
         <h2>Modules dans session</h2>
          {% for labelModule in session.modules %}
             <ul>
@@ -61,6 +74,13 @@
          {% else %}
             <li>Aucun module dans la session.</li>
          {% endfor %}
+
+        <!-- MODULES N'ÉTANT PAS DANS LA SESSION -->
+        <h2>Modules n'étant pas dans la session</h2>
+        {% for %}
+        {% else %}
+        {% endfor %}
+
 
         <a href="{{ path('app_session_index') }}" class="show-back-button">back to list</a>
         <a href="{{ path('app_session_edit', {'id': session.id}) }}" class="show-edit-button">edit</a>
